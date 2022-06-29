@@ -1,0 +1,103 @@
+<!DOCTYPE >
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">Janam Janam</h2>
+            <h3 id="artist">Arjit Singh</h2>
+                <div class="img_container">
+                    <img src="file:///C:/Users/sarth/Desktop/Html_Css_Js%20project/images/tum_hi_ho.jpg" alt="" />
+                </div>
+                <audio src="tum hi ho.mp3"></audio>
+
+                <!-- controls -->
+                <div class ="music_controls">
+                    <i class="fa-solid fa-backward" id="prev" tilte="Previous"></i>
+                    <i class="fa-solid fa-play main_button" id="play" tilte="Play"></i>
+                    <i class="fa-solid fa-forward" id="next" tilte="Next"></i>
+                </div>
+            </div>
+    </div>
+    <script>
+        const music = document.querySelector("audio")
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const artist = document.getElementById("artist");
+        const title = document.getElementById("title");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+
+        const songs = [
+            {
+            name: "tum hi ho",
+            title: "Tum Hi Ho",
+            artist: "Arjit Singh"
+        },
+        {
+            name: "halfGirlfriend",
+            title: "Half Girlfriend",
+            artist: "Armaan Mallick"
+        },
+        {
+            name: "Janam Janam",
+            title: "Janam Janam",
+            artist: "A.R Rehman"
+        }
+    ]
+
+        let isPlaying = false;
+        // for play function
+        const playMusic = () => {
+            isPlaying = true;
+            music.play();
+            play.classList.replace("fa-play", "fa-pause");
+            img.classList.add("anime");
+        };
+        //for pause function
+        const pauseMusic = () => {
+            isPlaying = false;
+            music.pause();
+            play.classList.replace("fa-pause", "fa-play");
+            img.classList.remove("anime");
+        };
+        play.addEventListener("click", () => {
+            if(isPlaying) {                     // we can use ternary operator  to finish code in one line....
+                pauseMusic();               // isPlaying ? pauseMusic() : playMusic() ;
+            } else {
+                playMusic();
+            }
+        });
+
+        const loadSong = (songs) =>{
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src = "music/" + songs.name + ".mp3";
+            img.src = "images/" + songs.name + ".jpg";
+        };
+
+        songIndex = 0;
+        const nextSong = () => {
+            songIndex = (songIndex + 1) % songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        }
+        const prevSong = () => {
+            songIndex = (songIndex - 1 + songs.length) % songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        }
+
+        next.addEventListener("click", nextSong);
+        prev.addEventListener("click", prevSong);
+    </script>
+</body>
+</html>
+</html>
